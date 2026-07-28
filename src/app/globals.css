@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted fonts — bundled locally via @fontsource, no runtime network calls. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/fraunces/400.css';
+@import '@fontsource/fraunces/500.css';
+@import '@fontsource/fraunces/600.css';
+@import '@fontsource/fraunces/600-italic.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+
+:root {
+  --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-fraunces: 'Fraunces', ui-serif, Georgia, serif;
+  --font-plex-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-canvas text-ink dark:bg-dusk-bg dark:text-dusk-text;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  @apply bg-thread-200 text-thread-900;
+}
+
+/* Respect the in-app animation toggle */
+.no-animations * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode: stronger borders and text, less reliance on subtle tone shifts */
+.high-contrast {
+  --tw-border-opacity: 1 !important;
+}
+.high-contrast .border-line,
+.high-contrast .dark\:border-dusk-line {
+  border-width: 1.5px !important;
+}
+.high-contrast button:focus-visible,
+.high-contrast a:focus-visible,
+.high-contrast [role='switch']:focus-visible {
+  outline: 3px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+/* Thin, quiet scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.line.DEFAULT') transparent;
+}
+.dark * {
+  scrollbar-color: theme('colors.dusk.line') transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: theme('colors.line.DEFAULT');
+  border-radius: 999px;
+}
+.dark *::-webkit-scrollbar-thumb {
+  background-color: theme('colors.dusk.line');
+}
+
+/* A subtle stitched-seam divider — the app's one recurring signature motif */
+.seam {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    theme('colors.line.DEFAULT') 0,
+    theme('colors.line.DEFAULT') 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  width: 1px;
+}
+.dark .seam {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    theme('colors.dusk.line') 0,
+    theme('colors.dusk.line') 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
